@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="14" failures="0" errors="0" time="1.22910712">
+    <testsuite name="tests/App.test.jsx" timestamp="2026-11-24T01:41:50.430Z" hostname="j" tests="7" failures="0" errors="0" skipped="0" time="1.185563683">
+        <testcase classname="tests/App.test.jsx" name="App &gt; renders categories from the API" time="0.175664257">
+        </testcase>
+        <testcase classname="tests/App.test.jsx" name="App &gt; shows an empty state" time="0.026050219">
+        </testcase>
+        <testcase classname="tests/App.test.jsx" name="App &gt; shows an error when the backend is down" time="0.117261223">
+        </testcase>
+        <testcase classname="tests/App.test.jsx" name="App &gt; creates a category and clears the form but keeps the token" time="0.530140961">
+        </testcase>
+        <testcase classname="tests/App.test.jsx" name="App &gt; keeps input and shows the error when creation fails" time="0.159458445">
+        </testcase>
+        <testcase classname="tests/App.test.jsx" name="App &gt; renders stored markup as inert text" time="0.071733798">
+        </testcase>
+        <testcase classname="tests/App.test.jsx" name="App &gt; never persists the token in browser storage" time="0.097635141">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/client.test.js" timestamp="2026-11-24T01:41:50.440Z" hostname="j" tests="7" failures="0" errors="0" skipped="0" time="0.043543437">
+        <testcase classname="tests/client.test.js" name="api client &gt; lists categories through the same-origin endpoint" time="0.021148479">
+        </testcase>
+        <testcase classname="tests/client.test.js" name="api client &gt; sends user input only as GraphQL variables" time="0.00306621">
+        </testcase>
+        <testcase classname="tests/client.test.js" name="api client &gt; attaches the write token as a bearer header" time="0.001854187">
+        </testcase>
+        <testcase classname="tests/client.test.js" name="api client &gt; surfaces GraphQL errors" time="0.005253684">
+        </testcase>
+        <testcase classname="tests/client.test.js" name="api client &gt; reports an unreachable backend" time="0.002055313">
+        </testcase>
+        <testcase classname="tests/client.test.js" name="api client &gt; reports an unreadable response" time="0.002113885">
+        </testcase>
+        <testcase classname="tests/client.test.js" name="api client &gt; rethrows aborts unchanged" time="0.001599943">
+        </testcase>
+    </testsuite>
+</testsuites>

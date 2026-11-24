@@ -1,12 +1,12 @@
 
  RUN  v5.1.1 ./frontend
 
- ✓ tests/client.test.js (7 tests) 13ms
- ✓ tests/App.test.jsx (7 tests) 329ms
+ ✓ tests/client.test.js (7 tests) 19ms
+ ✓ tests/App.test.jsx (7 tests) 440ms
 
  Test Files  2 passed (2)
       Tests  14 passed (14)
-   Start at  23:37:35
-   Duration  1.09s (environment 54%, tests 22%, setup 13%, transform 8%, import 3%)
+   Start at  19:55:01
+   Duration  1.55s (environment 61%, tests 20%, setup 13%, import 3%, transform 2%)
 
 JUNIT report written to ./reports/tests/frontend-junit.xml

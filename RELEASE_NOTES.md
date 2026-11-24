@@ -1,22 +1,15 @@
-# Release Notes: 1.0.0
+# Release Notes: 1.0.1
 
-Status: prepared, not yet tagged or published.
+Released 2026-11-24.
 
-## Highlights
+This is a documentation-only patch release. There is no code behaviour change from 1.0.0.
 
-- The backend is now a layered Go service with real GraphQL parsing, schema validation, and query limits, including rejection of unused, duplicate, and cyclic fragments.
-- Storage is pluggable, with an in-memory default and optional SQLite persistence.
-- The API defaults to loopback binding and an exact origin allowlist, and requires a write token on non-loopback addresses.
-- The frontend is split into API, hook, and component modules on React 19 and Vite 8.
-- Automated tests, a committed report from a real run, and a least-privilege CI workflow are included.
+## Changes
+
+- The changelog and release notes now record 1.0.0 as released on 2026-11-24.
+- The security audit records that the 2026-11-24 history rewrite removed the original commit, including the synthetic test fixtures that gitleaks flagged.
+- The committed test report was regenerated so it no longer references a commit outside the published history.
 
 ## Upgrade notes
 
-1. Install Go 1.26.11 or newer and Node.js 24.
-2. Start the backend with `go run ./cmd/server` from `backend/`.
-3. Update API clients to read the GraphQL `errors` array.
-4. Set `ALLOWED_ORIGINS` for any origin other than local Vite.
-5. Set `API_WRITE_TOKEN` before binding to a non-loopback address.
-6. To persist data, apply `db/schema.sql` and set `DATABASE_PATH`.
-
-See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
+No migration is needed from 1.0.0. See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.

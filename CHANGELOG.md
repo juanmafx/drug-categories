@@ -2,7 +2,13 @@
 
 All notable changes are documented here. The format follows Keep a Changelog, and the project uses Semantic Versioning.
 
-## [1.0.0] - Unreleased
+## [1.0.1] - 2026-11-24
+
+### Changed
+
+- Documentation corrections: release notes, changelog, security audit, and test report now reflect the published 1.0.0 release and the rewritten repository history. No code behaviour change.
+
+## [1.0.0] - 2026-11-24
 
 ### Breaking
 
@@ -37,4 +43,4 @@ All notable changes are documented here. The format follows Keep a Changelog, an
 
 ## [0.0.1] - 2026-03-10
 
-- Initial Go and React application.
+- Initial Go and React application. This commit is no longer part of the published history, which was rewritten on 2026-11-24 to keep only the 2026 modernization commits.

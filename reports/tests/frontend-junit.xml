@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="14" failures="0" errors="0" time="0.342706371">
-    <testsuite name="tests/App.test.jsx" timestamp="2026-11-24T02:37:36.985Z" tests="7" failures="0" errors="0" skipped="0" time="0.329352719">
-        <testcase classname="tests/App.test.jsx" name="App &gt; renders categories from the API" time="0.052054095">
+<testsuites name="vitest tests" tests="14" failures="0" errors="0" time="0.458639271">
+    <testsuite name="tests/App.test.jsx" timestamp="2026-11-24T22:55:02.685Z" tests="7" failures="0" errors="0" skipped="0" time="0.439648243">
+        <testcase classname="tests/App.test.jsx" name="App &gt; renders categories from the API" time="0.066872297">
         </testcase>
-        <testcase classname="tests/App.test.jsx" name="App &gt; shows an empty state" time="0.008252201">
+        <testcase classname="tests/App.test.jsx" name="App &gt; shows an empty state" time="0.01218581">
         </testcase>
-        <testcase classname="tests/App.test.jsx" name="App &gt; shows an error when the backend is down" time="0.034891584">
+        <testcase classname="tests/App.test.jsx" name="App &gt; shows an error when the backend is down" time="0.060147033">
         </testcase>
-        <testcase classname="tests/App.test.jsx" name="App &gt; creates a category and clears the form but keeps the token" time="0.142460434">
+        <testcase classname="tests/App.test.jsx" name="App &gt; creates a category and clears the form but keeps the token" time="0.190197948">
         </testcase>
-        <testcase classname="tests/App.test.jsx" name="App &gt; keeps input and shows the error when creation fails" time="0.047525858">
+        <testcase classname="tests/App.test.jsx" name="App &gt; keeps input and shows the error when creation fails" time="0.057154164">
         </testcase>
-        <testcase classname="tests/App.test.jsx" name="App &gt; renders stored markup as inert text" time="0.007375353">
+        <testcase classname="tests/App.test.jsx" name="App &gt; renders stored markup as inert text" time="0.00977164">
         </testcase>
-        <testcase classname="tests/App.test.jsx" name="App &gt; never persists the token in browser storage" time="0.034798487">
+        <testcase classname="tests/App.test.jsx" name="App &gt; never persists the token in browser storage" time="0.041058281">
         </testcase>
     </testsuite>
-    <testsuite name="tests/client.test.js" timestamp="2026-11-24T02:37:36.987Z" tests="7" failures="0" errors="0" skipped="0" time="0.013353652">
-        <testcase classname="tests/client.test.js" name="api client &gt; lists categories through the same-origin endpoint" time="0.007007235">
+    <testsuite name="tests/client.test.js" timestamp="2026-11-24T22:55:02.690Z" tests="7" failures="0" errors="0" skipped="0" time="0.018991028">
+        <testcase classname="tests/client.test.js" name="api client &gt; lists categories through the same-origin endpoint" time="0.01035816">
         </testcase>
-        <testcase classname="tests/client.test.js" name="api client &gt; sends user input only as GraphQL variables" time="0.000849826">
+        <testcase classname="tests/client.test.js" name="api client &gt; sends user input only as GraphQL variables" time="0.001163613">
         </testcase>
-        <testcase classname="tests/client.test.js" name="api client &gt; attaches the write token as a bearer header" time="0.00047665">
+        <testcase classname="tests/client.test.js" name="api client &gt; attaches the write token as a bearer header" time="0.000657926">
         </testcase>
-        <testcase classname="tests/client.test.js" name="api client &gt; surfaces GraphQL errors" time="0.001671471">
+        <testcase classname="tests/client.test.js" name="api client &gt; surfaces GraphQL errors" time="0.002181403">
         </testcase>
-        <testcase classname="tests/client.test.js" name="api client &gt; reports an unreachable backend" time="0.000573705">
+        <testcase classname="tests/client.test.js" name="api client &gt; reports an unreachable backend" time="0.00098533">
         </testcase>
-        <testcase classname="tests/client.test.js" name="api client &gt; reports an unreadable response" time="0.000598981">
+        <testcase classname="tests/client.test.js" name="api client &gt; reports an unreadable response" time="0.000787504">
         </testcase>
-        <testcase classname="tests/client.test.js" name="api client &gt; rethrows aborts unchanged" time="0.000559274">
+        <testcase classname="tests/client.test.js" name="api client &gt; rethrows aborts unchanged" time="0.000722677">
         </testcase>
     </testsuite>
 </testsuites>

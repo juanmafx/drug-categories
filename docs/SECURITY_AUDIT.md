@@ -1,6 +1,6 @@
 # Security Audit
 
-Scope: all tracked files and the single commit of history on `main`, reviewed on 2026-11-23 during the 1.0.0 modernization. A second automated review pass on the same date tested the branch adversarially and fixed the items under "Findings from the second review". Both were AI-assisted reviews supported by automated tools, not an independent third-party audit.
+Scope: all tracked files and the single commit of history on `main`, reviewed on 2026-11-23 during the 1.0.0 modernization. A second automated review pass on the same date tested the branch adversarially and fixed the items under "Findings from the second review". Both were AI-assisted reviews supported by automated tools, not an independent third-party audit. On 2026-11-24 the published history was rewritten to keep only the 2026 modernization commits, so the original commit reviewed here is no longer part of any branch or tag.
 
 ## Tools run
 
@@ -9,7 +9,7 @@ Scope: all tracked files and the single commit of history on `main`, reviewed on
 | `govulncheck` v1.10.0 on Go 1.26.11 | No vulnerabilities found |
 | `npm audit` on the 1.0.0 lockfile | 0 vulnerabilities |
 | `go vet`, `go test -race` | Clean |
-| `gitleaks` with `--redact` on branch history | 2 hits, both synthetic test fixtures in commit `45ae1c5`, replaced with generated values. They remain in that commit because history was not rewritten |
+| `gitleaks` with `--redact` on branch history | 2 hits, both synthetic test fixtures in the original commit, replaced with generated values. Resolved by the 2026-11-24 history rewrite, which removed that commit from every branch and tag. Any value that was ever published must still be treated as compromised |
 
 ## Findings fixed in 1.0.0
 

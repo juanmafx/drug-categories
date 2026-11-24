@@ -7,6 +7,7 @@ import (
 	"net/netip"
 	"net/url"
 	"strings"
+	"unicode"
 )
 
 const (
@@ -37,6 +38,9 @@ func Load(lookup func(string) string) (Config, error) {
 
 	if cfg.WriteToken != "" && len(cfg.WriteToken) < minimumTokenLength {
 		return Config{}, fmt.Errorf("API_WRITE_TOKEN must be at least %d characters", minimumTokenLength)
+	}
+	if strings.ContainsFunc(cfg.WriteToken, func(r rune) bool { return unicode.IsSpace(r) || unicode.IsControl(r) }) {
+		return Config{}, errors.New("API_WRITE_TOKEN must not contain whitespace or control characters")
 	}
 	loopback, err := isLoopback(cfg.Address)
 	if err != nil {

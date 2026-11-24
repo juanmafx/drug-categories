@@ -53,11 +53,13 @@ func NewService(repository store.Repository, logger *slog.Logger) (*Service, err
 }
 
 func (s *Service) Execute(ctx context.Context, request Request) (Response, error) {
-	document, err := parser.Parse(parser.ParseParams{
-		Source: source.NewSource(&source.Source{Body: []byte(request.Query), Name: "request"}),
-	})
+	body := source.NewSource(&source.Source{Body: []byte(request.Query), Name: "request"})
+	if err := enforceTokenLimit(body); err != nil {
+		return rejected(err.Error()), ErrRejected
+	}
+	document, err := parser.Parse(parser.ParseParams{Source: body})
 	if err != nil {
-		return rejected("query could not be parsed"), ErrRejected
+		return rejected(errUnparsable.Error()), ErrRejected
 	}
 
 	operation, err := singleOperation(document)
@@ -71,10 +73,13 @@ func (s *Service) Execute(ctx context.Context, request Request) (Response, error
 	validation := graphql.ValidateDocument(&s.schema, document, nil)
 	if !validation.IsValid {
 		response := Response{}
-		for _, validationError := range validation.Errors {
+		for _, validationError := range validation.Errors[:min(len(validation.Errors), maxReportedErrors)] {
 			response.Errors = append(response.Errors, Error{Message: validationError.Message})
 		}
 		return response, ErrRejected
+	}
+	if err := enforceStringVariables(operation, request.Variables); err != nil {
+		return rejected(err.Error()), ErrRejected
 	}
 
 	if operation.Operation == ast.OperationTypeMutation && !request.CanWrite {

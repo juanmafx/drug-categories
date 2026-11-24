@@ -4,9 +4,9 @@ Status: prepared, not yet tagged or published.
 
 ## Highlights
 
-- The backend is now a layered Go service with real GraphQL parsing, schema validation, and query limits.
+- The backend is now a layered Go service with real GraphQL parsing, schema validation, and query limits, including rejection of unused, duplicate, and cyclic fragments.
 - Storage is pluggable, with an in-memory default and optional SQLite persistence.
-- The API is safe by default: loopback binding, an exact origin allowlist, and a required write token on non-loopback addresses.
+- The API defaults to loopback binding and an exact origin allowlist, and requires a write token on non-loopback addresses.
 - The frontend is split into API, hook, and component modules on React 19 and Vite 8.
 - Automated tests, a committed report from a real run, and a least-privilege CI workflow are included.
 

@@ -51,3 +51,14 @@ func TestNameKeyFoldsOnlyASCII(t *testing.T) {
 		t.Fatalf("got %q", got)
 	}
 }
+
+func TestParseNewCategoryRejectsInvisibleCharacters(t *testing.T) {
+	for _, value := range []string{"Anal\u200Bgesics", "Anal\u202Egesics", "Anal\u2028gesics", "Anal\u2029gesics", "Anal\uFEFFgesics", "Anal\uE000gesics", "Anal\u00ADgesics"} {
+		if _, err := ParseNewCategory(value, ""); !errors.Is(err, ErrInvalidCategory) {
+			t.Fatalf("name %q: got %v", value, err)
+		}
+		if _, err := ParseNewCategory("Valid", value); !errors.Is(err, ErrInvalidCategory) {
+			t.Fatalf("description %q: got %v", value, err)
+		}
+	}
+}

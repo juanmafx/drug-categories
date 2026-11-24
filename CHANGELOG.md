@@ -20,7 +20,8 @@ All notable changes are documented here. The format follows Keep a Changelog, an
 - Real GraphQL parsing and validation.
 - Optional SQLite persistence and `db/schema.sql`.
 - Optional bearer-token protection for mutations.
-- Query, body, and rate limits, plus security headers and graceful shutdown.
+- Query token, depth, complexity, body, and rate limits, plus security headers and graceful shutdown.
+- Rejection of unused, duplicate, and cyclic fragments, non-string values for `String` variables, and invisible formatting characters in category text.
 - Backend and frontend test suites, a committed test report, and a CI workflow.
 - Architecture, security, and release documentation.
 

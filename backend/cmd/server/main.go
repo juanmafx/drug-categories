@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -57,10 +58,15 @@ func run(logger *slog.Logger) error {
 		MaxHeaderBytes:    16 << 10,
 	}
 
+	listener, err := net.Listen("tcp", cfg.Address)
+	if err != nil {
+		return fmt.Errorf("listen: %w", err)
+	}
+	logger.Info("backend listening", "address", listener.Addr().String(), "durable", cfg.DatabasePath != "")
+
 	failures := make(chan error, 1)
 	go func() {
-		logger.Info("backend listening", "address", cfg.Address, "durable", cfg.DatabasePath != "")
-		failures <- server.ListenAndServe()
+		failures <- server.Serve(listener)
 	}()
 
 	select {

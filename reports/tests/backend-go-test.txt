@@ -13,34 +13,38 @@
 --- PASS: TestLoadRejectsInvalidOrigins (0.00s)
 === RUN   TestLoadParsesOriginList
 --- PASS: TestLoadParsesOriginList (0.00s)
+=== RUN   TestLoadRejectsTokenWithWhitespaceOrControlCharacters
+--- PASS: TestLoadRejectsTokenWithWhitespaceOrControlCharacters (0.00s)
 PASS
 coverage: 100.0% of statements
-ok  	github.com/juanmafx/drug-categories/backend/internal/config	1.242s	coverage: 100.0% of statements
+ok  	github.com/juanmafx/drug-categories/backend/internal/config	1.013s	coverage: 100.0% of statements
 === RUN   TestParseNewCategoryTrimsInput
 --- PASS: TestParseNewCategoryTrimsInput (0.00s)
 === RUN   TestParseNewCategoryRejectsInvalidInput
-=== RUN   TestParseNewCategoryRejectsInvalidInput/invalid_utf8
 === RUN   TestParseNewCategoryRejectsInvalidInput/long_name
 === RUN   TestParseNewCategoryRejectsInvalidInput/long_description
 === RUN   TestParseNewCategoryRejectsInvalidInput/empty_name
 === RUN   TestParseNewCategoryRejectsInvalidInput/blank_name
 === RUN   TestParseNewCategoryRejectsInvalidInput/control_in_name
 === RUN   TestParseNewCategoryRejectsInvalidInput/newline_in_description
---- PASS: TestParseNewCategoryRejectsInvalidInput (0.01s)
-    --- PASS: TestParseNewCategoryRejectsInvalidInput/invalid_utf8 (0.00s)
+=== RUN   TestParseNewCategoryRejectsInvalidInput/invalid_utf8
+--- PASS: TestParseNewCategoryRejectsInvalidInput (0.00s)
     --- PASS: TestParseNewCategoryRejectsInvalidInput/long_name (0.00s)
     --- PASS: TestParseNewCategoryRejectsInvalidInput/long_description (0.00s)
     --- PASS: TestParseNewCategoryRejectsInvalidInput/empty_name (0.00s)
     --- PASS: TestParseNewCategoryRejectsInvalidInput/blank_name (0.00s)
     --- PASS: TestParseNewCategoryRejectsInvalidInput/control_in_name (0.00s)
     --- PASS: TestParseNewCategoryRejectsInvalidInput/newline_in_description (0.00s)
+    --- PASS: TestParseNewCategoryRejectsInvalidInput/invalid_utf8 (0.00s)
 === RUN   TestParseNewCategoryAcceptsLimitsInCharacters
 --- PASS: TestParseNewCategoryAcceptsLimitsInCharacters (0.00s)
 === RUN   TestNameKeyFoldsOnlyASCII
 --- PASS: TestNameKeyFoldsOnlyASCII (0.00s)
+=== RUN   TestParseNewCategoryRejectsInvisibleCharacters
+--- PASS: TestParseNewCategoryRejectsInvisibleCharacters (0.00s)
 PASS
 coverage: 100.0% of statements
-ok  	github.com/juanmafx/drug-categories/backend/internal/domain	1.253s	coverage: 100.0% of statements
+ok  	github.com/juanmafx/drug-categories/backend/internal/domain	1.012s	coverage: 100.0% of statements
 === RUN   TestQueryListsCategories
 --- PASS: TestQueryListsCategories (0.00s)
 === RUN   TestMutationCreatesCategory
@@ -54,34 +58,72 @@ ok  	github.com/juanmafx/drug-categories/backend/internal/domain	1.253s	coverage
 === RUN   TestDomainErrorsArePublic
 --- PASS: TestDomainErrorsArePublic (0.00s)
 === RUN   TestInternalErrorsAreMaskedAndLogged
---- PASS: TestInternalErrorsAreMaskedAndLogged (0.01s)
+--- PASS: TestInternalErrorsAreMaskedAndLogged (0.00s)
 === RUN   TestRejectedDocuments
-=== RUN   TestRejectedDocuments/syntax_error
-=== RUN   TestRejectedDocuments/fragment_cycle
+=== RUN   TestRejectedDocuments/unknown_fragment
 === RUN   TestRejectedDocuments/multiple_operations
+=== RUN   TestRejectedDocuments/fragment_only
 === RUN   TestRejectedDocuments/too_deep
 === RUN   TestRejectedDocuments/mutation_aliases
 === RUN   TestRejectedDocuments/fragment_fan-out
 === RUN   TestRejectedDocuments/unknown_field
-=== RUN   TestRejectedDocuments/unknown_fragment
-=== RUN   TestRejectedDocuments/fragment_only
+=== RUN   TestRejectedDocuments/fragment_cycle
 === RUN   TestRejectedDocuments/too_wide
---- PASS: TestRejectedDocuments (0.01s)
-    --- PASS: TestRejectedDocuments/syntax_error (0.00s)
-    --- PASS: TestRejectedDocuments/fragment_cycle (0.00s)
+=== RUN   TestRejectedDocuments/syntax_error
+--- PASS: TestRejectedDocuments (0.00s)
+    --- PASS: TestRejectedDocuments/unknown_fragment (0.00s)
     --- PASS: TestRejectedDocuments/multiple_operations (0.00s)
+    --- PASS: TestRejectedDocuments/fragment_only (0.00s)
     --- PASS: TestRejectedDocuments/too_deep (0.00s)
     --- PASS: TestRejectedDocuments/mutation_aliases (0.00s)
     --- PASS: TestRejectedDocuments/fragment_fan-out (0.00s)
     --- PASS: TestRejectedDocuments/unknown_field (0.00s)
-    --- PASS: TestRejectedDocuments/unknown_fragment (0.00s)
-    --- PASS: TestRejectedDocuments/fragment_only (0.00s)
+    --- PASS: TestRejectedDocuments/fragment_cycle (0.00s)
     --- PASS: TestRejectedDocuments/too_wide (0.00s)
+    --- PASS: TestRejectedDocuments/syntax_error (0.00s)
 === RUN   TestMissingRequiredVariableIsReported
 --- PASS: TestMissingRequiredVariableIsReported (0.00s)
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation/used_self_cycle
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation/duplicate
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation/unused
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation/unused_expansion
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation/unused_cycle
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation/unused_self_cycle
+=== RUN   TestFragmentAbuseIsRejectedBeforeValidation/used_cycle
+--- PASS: TestFragmentAbuseIsRejectedBeforeValidation (0.00s)
+    --- PASS: TestFragmentAbuseIsRejectedBeforeValidation/used_self_cycle (0.00s)
+    --- PASS: TestFragmentAbuseIsRejectedBeforeValidation/duplicate (0.00s)
+    --- PASS: TestFragmentAbuseIsRejectedBeforeValidation/unused (0.00s)
+    --- PASS: TestFragmentAbuseIsRejectedBeforeValidation/unused_expansion (0.00s)
+    --- PASS: TestFragmentAbuseIsRejectedBeforeValidation/unused_cycle (0.00s)
+    --- PASS: TestFragmentAbuseIsRejectedBeforeValidation/unused_self_cycle (0.00s)
+    --- PASS: TestFragmentAbuseIsRejectedBeforeValidation/used_cycle (0.00s)
+=== RUN   TestSharedAcyclicFragmentIsAllowed
+--- PASS: TestSharedAcyclicFragmentIsAllowed (0.00s)
+=== RUN   TestTokenLimitRejectsOversizedDocuments
+=== RUN   TestTokenLimitRejectsOversizedDocuments/nested_lists
+=== RUN   TestTokenLimitRejectsOversizedDocuments/variables
+--- PASS: TestTokenLimitRejectsOversizedDocuments (0.00s)
+    --- PASS: TestTokenLimitRejectsOversizedDocuments/nested_lists (0.00s)
+    --- PASS: TestTokenLimitRejectsOversizedDocuments/variables (0.00s)
+=== RUN   TestValidationErrorsAreCapped
+--- PASS: TestValidationErrorsAreCapped (0.15s)
+=== RUN   TestNonStringVariablesAreRejected
+=== RUN   TestNonStringVariablesAreRejected/object
+=== RUN   TestNonStringVariablesAreRejected/list
+=== RUN   TestNonStringVariablesAreRejected/number
+=== RUN   TestNonStringVariablesAreRejected/boolean
+--- PASS: TestNonStringVariablesAreRejected (0.01s)
+    --- PASS: TestNonStringVariablesAreRejected/object (0.00s)
+    --- PASS: TestNonStringVariablesAreRejected/list (0.00s)
+    --- PASS: TestNonStringVariablesAreRejected/number (0.00s)
+    --- PASS: TestNonStringVariablesAreRejected/boolean (0.00s)
+=== RUN   TestBooleanDirectiveVariableIsAllowed
+--- PASS: TestBooleanDirectiveVariableIsAllowed (0.00s)
 PASS
-coverage: 96.8% of statements
-ok  	github.com/juanmafx/drug-categories/backend/internal/graphqlapi	1.086s	coverage: 96.8% of statements
+coverage: 96.9% of statements
+ok  	github.com/juanmafx/drug-categories/backend/internal/graphqlapi	1.193s	coverage: 96.9% of statements
 === RUN   TestListCategoriesEndToEnd
 --- PASS: TestListCategoriesEndToEnd (0.00s)
 === RUN   TestSecurityHeadersPresent
@@ -89,66 +131,68 @@ ok  	github.com/juanmafx/drug-categories/backend/internal/graphqlapi	1.086s	cove
 === RUN   TestOriginPolicy
 --- PASS: TestOriginPolicy (0.00s)
 === RUN   TestPreflight
---- PASS: TestPreflight (0.01s)
+--- PASS: TestPreflight (0.00s)
 === RUN   TestRejectsNonPost
 --- PASS: TestRejectsNonPost (0.00s)
 === RUN   TestRejectsSimpleRequestContentTypes
 --- PASS: TestRejectsSimpleRequestContentTypes (0.00s)
 === RUN   TestRequestValidation
-=== RUN   TestRequestValidation/long_query
 === RUN   TestRequestValidation/malformed_json
 === RUN   TestRequestValidation/trailing_json
 === RUN   TestRequestValidation/missing_query
 === RUN   TestRequestValidation/invalid_query
 === RUN   TestRequestValidation/oversized_body
---- PASS: TestRequestValidation (0.02s)
-    --- PASS: TestRequestValidation/long_query (0.01s)
+=== RUN   TestRequestValidation/long_query
+--- PASS: TestRequestValidation (0.00s)
     --- PASS: TestRequestValidation/malformed_json (0.00s)
     --- PASS: TestRequestValidation/trailing_json (0.00s)
     --- PASS: TestRequestValidation/missing_query (0.00s)
     --- PASS: TestRequestValidation/invalid_query (0.00s)
     --- PASS: TestRequestValidation/oversized_body (0.00s)
+    --- PASS: TestRequestValidation/long_query (0.00s)
 === RUN   TestWriteTokenEnforcement
---- PASS: TestWriteTokenEnforcement (0.01s)
+--- PASS: TestWriteTokenEnforcement (0.00s)
 === RUN   TestRateLimitReturns429
---- PASS: TestRateLimitReturns429 (0.40s)
+--- PASS: TestRateLimitReturns429 (0.06s)
 === RUN   TestRateLimiterWindowAndIsolation
 --- PASS: TestRateLimiterWindowAndIsolation (0.00s)
 === RUN   TestRateLimiterCapsTrackedClients
---- PASS: TestRateLimiterCapsTrackedClients (0.47s)
+--- PASS: TestRateLimiterCapsTrackedClients (0.09s)
 === RUN   TestHealthEndpoint
 --- PASS: TestHealthEndpoint (0.00s)
+=== RUN   TestFragmentCycleDoesNotCrashServer
+--- PASS: TestFragmentCycleDoesNotCrashServer (0.00s)
 PASS
 coverage: 95.5% of statements
-ok  	github.com/juanmafx/drug-categories/backend/internal/httpapi	1.999s	coverage: 95.5% of statements
+ok  	github.com/juanmafx/drug-categories/backend/internal/httpapi	1.177s	coverage: 95.5% of statements
 === RUN   TestRepositoryContract
 === RUN   TestRepositoryContract/memory
 === RUN   TestRepositoryContract/sqlite
---- PASS: TestRepositoryContract (0.07s)
+--- PASS: TestRepositoryContract (0.02s)
     --- PASS: TestRepositoryContract/memory (0.00s)
-    --- PASS: TestRepositoryContract/sqlite (0.01s)
+    --- PASS: TestRepositoryContract/sqlite (0.00s)
 === RUN   TestRepositoryTreatsInjectionPayloadAsData
 === RUN   TestRepositoryTreatsInjectionPayloadAsData/memory
 === RUN   TestRepositoryTreatsInjectionPayloadAsData/sqlite
---- PASS: TestRepositoryTreatsInjectionPayloadAsData (0.05s)
+--- PASS: TestRepositoryTreatsInjectionPayloadAsData (0.01s)
     --- PASS: TestRepositoryTreatsInjectionPayloadAsData/memory (0.00s)
-    --- PASS: TestRepositoryTreatsInjectionPayloadAsData/sqlite (0.02s)
+    --- PASS: TestRepositoryTreatsInjectionPayloadAsData/sqlite (0.00s)
 === RUN   TestRepositoryConcurrentCreatesAssignUniqueIDs
 === RUN   TestRepositoryConcurrentCreatesAssignUniqueIDs/memory
 === RUN   TestRepositoryConcurrentCreatesAssignUniqueIDs/sqlite
---- PASS: TestRepositoryConcurrentCreatesAssignUniqueIDs (0.53s)
+--- PASS: TestRepositoryConcurrentCreatesAssignUniqueIDs (0.09s)
     --- PASS: TestRepositoryConcurrentCreatesAssignUniqueIDs/memory (0.00s)
-    --- PASS: TestRepositoryConcurrentCreatesAssignUniqueIDs/sqlite (0.50s)
+    --- PASS: TestRepositoryConcurrentCreatesAssignUniqueIDs/sqlite (0.08s)
 === RUN   TestMemoryListReturnsCopy
 --- PASS: TestMemoryListReturnsCopy (0.00s)
 === RUN   TestMemoryHonorsCanceledContext
 --- PASS: TestMemoryHonorsCanceledContext (0.00s)
 === RUN   TestOpenSQLiteRequiresSchema
---- PASS: TestOpenSQLiteRequiresSchema (0.02s)
+--- PASS: TestOpenSQLiteRequiresSchema (0.00s)
 === RUN   TestOpenSQLiteDoesNotCreateMissingFile
 --- PASS: TestOpenSQLiteDoesNotCreateMissingFile (0.00s)
 === RUN   TestSchemaEnforcesConstraints
---- PASS: TestSchemaEnforcesConstraints (0.05s)
+--- PASS: TestSchemaEnforcesConstraints (0.01s)
 PASS
 coverage: 91.0% of statements
-ok  	github.com/juanmafx/drug-categories/backend/internal/store	1.785s	coverage: 91.0% of statements
+ok  	github.com/juanmafx/drug-categories/backend/internal/store	1.150s	coverage: 91.0% of statements

@@ -62,8 +62,8 @@ func validateText(field, value string, maxLength int) error {
 		return fmt.Errorf("%w: %s must be at most %d characters", ErrInvalidCategory, field, maxLength)
 	}
 	for _, r := range value {
-		if unicode.IsControl(r) {
-			return fmt.Errorf("%w: %s must not contain control characters", ErrInvalidCategory, field)
+		if unicode.In(r, unicode.Cc, unicode.Cf, unicode.Co, unicode.Zl, unicode.Zp) {
+			return fmt.Errorf("%w: %s must not contain control or invisible characters", ErrInvalidCategory, field)
 		}
 	}
 	return nil

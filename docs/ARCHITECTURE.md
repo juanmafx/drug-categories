@@ -36,12 +36,13 @@ Dependencies point inward. `domain` imports nothing from the project, and storag
 1. `httpapi` applies security headers and the origin allowlist.
 2. The per-client rate limit and the content type are checked.
 3. The body is decoded with size limits.
-4. `graphqlapi` parses the document and requires exactly one operation.
-5. Depth, complexity, and mutation-count limits run before schema validation, so that hostile documents are rejected cheaply.
-6. The document is validated against the schema.
+4. `graphqlapi` enforces a token budget, parses the document, and requires exactly one operation.
+5. Fragment, depth, complexity, and mutation-count limits run before schema validation. This ordering is required: the GraphQL library's validator overflows the stack on cyclic fragments, which terminates the process, so cycles and unused fragments must never reach it.
+6. The document is validated against the schema, and at most 10 validation errors are returned.
 7. Mutations are refused unless the caller has write access.
-8. Resolvers call `domain` validation and then the repository.
-9. Errors outside the domain are logged and replaced by a generic message.
+8. Values for `String` variables must be JSON strings, because the library would otherwise coerce objects and numbers into text.
+9. Resolvers call `domain` validation and then the repository.
+10. Errors outside the domain are logged and replaced by a generic message.
 
 ## GraphQL API
 

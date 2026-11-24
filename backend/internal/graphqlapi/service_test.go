@@ -212,3 +212,106 @@ func TestMissingRequiredVariableIsReported(t *testing.T) {
 		t.Fatal("expected variable error")
 	}
 }
+
+func TestFragmentAbuseIsRejectedBeforeValidation(t *testing.T) {
+	var exponential strings.Builder
+	exponential.WriteString("{ categories { id } }")
+	for index := range 40 {
+		fmt.Fprintf(&exponential, " fragment F%d on Category { ...F%d ...F%d }", index, index+1, index+1)
+	}
+	exponential.WriteString(" fragment F40 on Category { id }")
+
+	cases := map[string]struct {
+		query string
+		want  error
+	}{
+		"unused cycle":      {"{ categories { id } } fragment A on Category { ...B } fragment B on Category { ...A }", errUnusedFragment},
+		"unused self cycle": {"{ categories { id } } fragment A on Category { ...A }", errUnusedFragment},
+		"used cycle":        {"{ categories { ...A } } fragment A on Category { ...B } fragment B on Category { ...A }", errFragmentCycle},
+		"used self cycle":   {"{ categories { ...A } } fragment A on Category { ...A }", errFragmentCycle},
+		"duplicate":         {"{ categories { ...A } } fragment A on Category { id } fragment A on Category { ...A }", errDuplicateFragment},
+		"unused":            {"{ categories { id } } fragment A on Category { id }", errUnusedFragment},
+		"unused expansion":  {exponential.String(), errUnusedFragment},
+	}
+	for name, testCase := range cases {
+		t.Run(name, func(t *testing.T) {
+			response, err := defaultService(t).Execute(context.Background(), Request{Query: testCase.query})
+			if !errors.Is(err, ErrRejected) || len(response.Errors) != 1 || response.Errors[0].Message != testCase.want.Error() {
+				t.Fatalf("err=%v response=%+v", err, response)
+			}
+		})
+	}
+}
+
+func TestSharedAcyclicFragmentIsAllowed(t *testing.T) {
+	query := "{ categories { ...A ...B } } fragment A on Category { ...C } fragment B on Category { ...C } fragment C on Category { id }"
+	response, err := defaultService(t).Execute(context.Background(), Request{Query: query})
+	if err != nil || len(response.Errors) != 0 {
+		t.Fatalf("err=%v response=%+v", err, response)
+	}
+}
+
+func TestTokenLimitRejectsOversizedDocuments(t *testing.T) {
+	for name, query := range map[string]string{
+		"nested lists": "{ categories(a:" + strings.Repeat("[", 1000) + strings.Repeat("]", 1000) + ") { id } }",
+		"variables":    "query(" + strings.Repeat("$a:Int ", 400) + "){ categories { id } }",
+	} {
+		t.Run(name, func(t *testing.T) {
+			response, err := defaultService(t).Execute(context.Background(), Request{Query: query})
+			if !errors.Is(err, ErrRejected) || len(response.Errors) != 1 || response.Errors[0].Message != errTooManyTokens.Error() {
+				t.Fatalf("err=%v errors=%d", err, len(response.Errors))
+			}
+		})
+	}
+}
+
+func TestValidationErrorsAreCapped(t *testing.T) {
+	query := "query(" + strings.Repeat("$a:Int ", 100) + "){ categories { id } }"
+	response, err := defaultService(t).Execute(context.Background(), Request{Query: query})
+	if !errors.Is(err, ErrRejected) || len(response.Errors) != maxReportedErrors {
+		t.Fatalf("err=%v errors=%d", err, len(response.Errors))
+	}
+}
+
+func TestNonStringVariablesAreRejected(t *testing.T) {
+	for name, value := range map[string]any{
+		"object":  map[string]any{"key": 1},
+		"list":    []any{"a"},
+		"number":  float64(7),
+		"boolean": true,
+	} {
+		t.Run(name, func(t *testing.T) {
+			repository := store.NewMemory()
+			response, err := newService(t, repository, io.Discard).Execute(context.Background(), Request{
+				Query:     createMutation,
+				Variables: map[string]any{"name": value},
+				CanWrite:  true,
+			})
+			if !errors.Is(err, ErrRejected) || len(response.Errors) != 1 {
+				t.Fatalf("err=%v response=%+v", err, response)
+			}
+			categories, listErr := repository.List(context.Background())
+			if listErr != nil || len(categories) != 0 {
+				t.Fatalf("categories=%v err=%v", categories, listErr)
+			}
+		})
+	}
+	response, err := defaultService(t).Execute(context.Background(), Request{
+		Query:     createMutation,
+		Variables: map[string]any{"name": "Antivirals", "description": nil},
+		CanWrite:  true,
+	})
+	if err != nil || len(response.Errors) != 0 {
+		t.Fatalf("err=%v response=%+v", err, response)
+	}
+}
+
+func TestBooleanDirectiveVariableIsAllowed(t *testing.T) {
+	response, err := defaultService(t).Execute(context.Background(), Request{
+		Query:     "query($show:Boolean!){ categories @include(if:$show) { id } }",
+		Variables: map[string]any{"show": true},
+	})
+	if err != nil || len(response.Errors) != 0 {
+		t.Fatalf("err=%v response=%+v", err, response)
+	}
+}

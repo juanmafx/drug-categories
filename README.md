@@ -16,7 +16,7 @@ It is a compact reference for a cleanly layered Go and React application: a narr
 
 - Lists categories through the `categories` query.
 - Creates categories through the `createCategory` mutation.
-- Validates names and descriptions, and rejects case-insensitive duplicate names (ASCII case folding).
+- Validates names and descriptions, rejects control and invisible formatting characters, and rejects case-insensitive duplicate names (ASCII case folding).
 - Stores data in memory by default, or in SQLite when `DATABASE_PATH` is set.
 - Does not update or delete categories.
 
@@ -108,7 +108,7 @@ The server never creates or migrates the database. It refuses to start if the sc
 | `HTTP_ADDR` | `127.0.0.1:8080` | Listen address. |
 | `ALLOWED_ORIGINS` | Local Vite dev and preview origins | Comma-separated exact browser origins. Wildcards are rejected. |
 | `DATABASE_PATH` | empty | SQLite file path. Empty selects the in-memory store. |
-| `API_WRITE_TOKEN` | empty | Bearer token for mutations, minimum 32 characters. Required on non-loopback addresses. |
+| `API_WRITE_TOKEN` | empty | Bearer token for mutations, minimum 32 characters, no whitespace or control characters. Required on non-loopback addresses. |
 | `BACKEND_URL` | `http://127.0.0.1:8080` | Frontend dev and preview proxy target. |
 
 See [.env.example](.env.example). The server reads the process environment and does not load `.env` files itself.
@@ -132,7 +132,7 @@ Results of the latest recorded run are in [reports/tests/SUMMARY.md](reports/tes
 
 - Mutations require a bearer token whenever one is configured, and the server will not bind to a non-loopback address without one.
 - Browser requests are checked against an exact origin allowlist, and only `application/json` is accepted.
-- Request size, query depth, query complexity, and per-client request rate are bounded.
+- Request size, query tokens, query depth, query complexity, and per-client request rate are bounded. Documents with unused, duplicate, or cyclic fragments are rejected before schema validation.
 - SQL is parameterized, and internal errors are logged rather than returned to clients.
 - The rate limiter keys on the socket peer address. Behind a reverse proxy all clients share one bucket, so apply limits at the proxy as well.
 - TLS is not terminated by this service. Use a TLS-terminating proxy for any non-local deployment.

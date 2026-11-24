@@ -14,6 +14,7 @@ frontend_status=0
 
 sed -i -E 's/\x1b\[[0-9;]*m//g' "$report_dir/frontend-vitest.txt"
 sed -i "s#$root#.#g" "$report_dir/backend-go-test.txt" "$report_dir/frontend-vitest.txt" "$report_dir/frontend-junit.xml"
+sed -i -E 's/ hostname="[^"]*"//g' "$report_dir/frontend-junit.xml"
 
 backend_passed="$(grep -cE '^ *--- PASS' "$report_dir/backend-go-test.txt" || true)"
 backend_failed="$(grep -cE '^ *--- FAIL' "$report_dir/backend-go-test.txt" || true)"

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-const validToken = "0123456789abcdef0123456789abcdef"
+var validToken = strings.Repeat("v", 32)
 
 func lookupFrom(values map[string]string) func(string) string {
 	return func(key string) string { return values[key] }
@@ -68,5 +68,20 @@ func TestLoadParsesOriginList(t *testing.T) {
 	}
 	if len(cfg.AllowedOrigins) != 2 || cfg.AllowedOrigins[1] != "https://b.example.test:8443" {
 		t.Fatalf("got %v", cfg.AllowedOrigins)
+	}
+}
+
+func TestLoadRejectsTokenWithWhitespaceOrControlCharacters(t *testing.T) {
+	for _, token := range []string{
+		strings.Repeat(" ", 32),
+		validToken + " ",
+		" " + validToken,
+		validToken + "\n",
+		validToken[:16] + " " + validToken[16:],
+		validToken + "\x00",
+	} {
+		if _, err := Load(lookupFrom(map[string]string{"API_WRITE_TOKEN": token})); err == nil {
+			t.Fatalf("expected error for token of length %d", len(token))
+		}
 	}
 }

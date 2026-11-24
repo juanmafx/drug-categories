@@ -16,10 +16,11 @@ import (
 
 const (
 	testOrigin   = "http://localhost:5173"
-	testToken    = "0123456789abcdef0123456789abcdef"
 	listBody     = `{"query":"query { categories { id name description } }"}`
 	mutationBody = `{"query":"mutation($name:String!){ createCategory(name:$name){ id name } }","variables":{"name":"Antivirals"}}`
 )
+
+var testToken = strings.Repeat("t", 32)
 
 func newTestHandler(t *testing.T, token string) http.Handler {
 	t.Helper()
@@ -227,5 +228,16 @@ func TestHealthEndpoint(t *testing.T) {
 	handler.ServeHTTP(recorder, httptest.NewRequest(http.MethodPost, "/healthz", nil))
 	if recorder.Code != http.StatusMethodNotAllowed {
 		t.Fatalf("status %d", recorder.Code)
+	}
+}
+
+func TestFragmentCycleDoesNotCrashServer(t *testing.T) {
+	handler := newTestHandler(t, "")
+	body := `{"query":"{ categories { id } } fragment A on Category { ...B } fragment B on Category { ...A }"}`
+	if recorder := post(handler, body, nil); recorder.Code != http.StatusBadRequest {
+		t.Fatalf("status %d: %s", recorder.Code, recorder.Body)
+	}
+	if recorder := post(handler, listBody, nil); recorder.Code != http.StatusOK {
+		t.Fatalf("status %d: %s", recorder.Code, recorder.Body)
 	}
 }
